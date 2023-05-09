@@ -1,24 +1,29 @@
-import logo from './logo.svg';
+import { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
 import './App.css';
+import Footer from './components/Footer';
+import Header from './components/Header';
+import Body from './components/Layout/Body';
+import Container from './components/Layout/Container';
+import ListItem from './components/ListItem';
+import items from './dummy/items.json';
+import { listItemsState } from './recoil/items';
 
 function App() {
+  const [listItems, setListItems] = useRecoilState(listItemsState);
+
+  useEffect(() => {
+    setListItems(items);
+  }, [setListItems]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Header />
+      <Body>
+        <ListItem items={listItems} />
+      </Body>
+      <Footer />
+    </Container>
   );
 }
 
